@@ -1,7 +1,6 @@
 package com.yx.app.dao;
 
 import com.yx.app.entity.LisInspecUser;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -16,10 +15,7 @@ public interface LisInspecUserMapper {
 
     int updateByPrimaryKeySelective(LisInspecUser record);
 
-    int updateByPrimaryKeyWithBLOBs(LisInspecUser record);
-
     int updateByPrimaryKey(LisInspecUser record);
 
-    @Select("select * from lis_inspec_users")
     List<LisInspecUser> queryList();
 }

@@ -20,38 +20,18 @@
       <arg column="CLIENT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.yx.app.entity.LisInspecUser">
-    <constructor>
-      <idArg column="ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="USERNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="HIS_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="USERNAME_CN" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="INSPEC_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="PASSWORD" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="DEPT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ENABLED" javaType="java.lang.String" jdbcType="CHAR" />
-      <arg column="DEV_CODES" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ROLE" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="PERMISSIONS" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="HOSPITAL_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="PUPDATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="CHANGE_AUDIT_PASSWORD" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="CLIENT_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="AUTO_GRAPH" javaType="java.lang.String" jdbcType="CLOB" />
-    </constructor>
-  </resultMap>
   <sql id="Base_Column_List">
     ID, USERNAME, HIS_ID, USERNAME_CN, INSPEC_NAME, PASSWORD, DEPT_ID, ENABLED, DEV_CODES, 
     ROLE, PERMISSIONS, HOSPITAL_ID, PUPDATE_TIME, CHANGE_AUDIT_PASSWORD, CLIENT_ID
   </sql>
-  <sql id="Blob_Column_List">
-    AUTO_GRAPH
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  <select id="queryList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from LIS_INSPEC_USERS
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from LIS_INSPEC_USERS
     where ID = #{id,jdbcType=VARCHAR}
   </select>
@@ -64,14 +44,14 @@
       USERNAME_CN, INSPEC_NAME, PASSWORD, 
       DEPT_ID, ENABLED, DEV_CODES, 
       ROLE, PERMISSIONS, HOSPITAL_ID, 
-      PUPDATE_TIME, CHANGE_AUDIT_PASSWORD, CLIENT_ID, 
-      AUTO_GRAPH)
+      PUPDATE_TIME, CHANGE_AUDIT_PASSWORD, CLIENT_ID
+      )
     values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{hisId,jdbcType=VARCHAR}, 
       #{usernameCn,jdbcType=VARCHAR}, #{inspecName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{deptId,jdbcType=VARCHAR}, #{enabled,jdbcType=CHAR}, #{devCodes,jdbcType=VARCHAR}, 
       #{role,jdbcType=VARCHAR}, #{permissions,jdbcType=VARCHAR}, #{hospitalId,jdbcType=VARCHAR}, 
-      #{pupdateTime,jdbcType=TIMESTAMP}, #{changeAuditPassword,jdbcType=VARCHAR}, #{clientId,jdbcType=VARCHAR}, 
-      #{autoGraph,jdbcType=CLOB})
+      #{pupdateTime,jdbcType=TIMESTAMP}, #{changeAuditPassword,jdbcType=VARCHAR}, #{clientId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yx.app.entity.LisInspecUser">
     insert into LIS_INSPEC_USERS
@@ -121,9 +101,6 @@
       <if test="clientId != null">
         CLIENT_ID,
       </if>
-      <if test="autoGraph != null">
-        AUTO_GRAPH,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -170,9 +147,6 @@
       </if>
       <if test="clientId != null">
         #{clientId,jdbcType=VARCHAR},
-      </if>
-      <if test="autoGraph != null">
-        #{autoGraph,jdbcType=CLOB},
       </if>
     </trim>
   </insert>
@@ -221,29 +195,7 @@
       <if test="clientId != null">
         CLIENT_ID = #{clientId,jdbcType=VARCHAR},
       </if>
-      <if test="autoGraph != null">
-        AUTO_GRAPH = #{autoGraph,jdbcType=CLOB},
-      </if>
     </set>
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yx.app.entity.LisInspecUser">
-    update LIS_INSPEC_USERS
-    set USERNAME = #{username,jdbcType=VARCHAR},
-      HIS_ID = #{hisId,jdbcType=VARCHAR},
-      USERNAME_CN = #{usernameCn,jdbcType=VARCHAR},
-      INSPEC_NAME = #{inspecName,jdbcType=VARCHAR},
-      PASSWORD = #{password,jdbcType=VARCHAR},
-      DEPT_ID = #{deptId,jdbcType=VARCHAR},
-      ENABLED = #{enabled,jdbcType=CHAR},
-      DEV_CODES = #{devCodes,jdbcType=VARCHAR},
-      ROLE = #{role,jdbcType=VARCHAR},
-      PERMISSIONS = #{permissions,jdbcType=VARCHAR},
-      HOSPITAL_ID = #{hospitalId,jdbcType=VARCHAR},
-      PUPDATE_TIME = #{pupdateTime,jdbcType=TIMESTAMP},
-      CHANGE_AUDIT_PASSWORD = #{changeAuditPassword,jdbcType=VARCHAR},
-      CLIENT_ID = #{clientId,jdbcType=VARCHAR},
-      AUTO_GRAPH = #{autoGraph,jdbcType=CLOB}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yx.app.entity.LisInspecUser">

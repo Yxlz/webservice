@@ -33,9 +33,7 @@ public class LisInspecUser {
 
     private String clientId;
 
-    private String autoGraph;
-
-    public LisInspecUser(String id, String username, String hisId, String usernameCn, String inspecName, String password, String deptId, String enabled, String devCodes, String role, String permissions, String hospitalId, Date pupdateTime, String changeAuditPassword, String clientId, String autoGraph) {
+    public LisInspecUser(String id, String username, String hisId, String usernameCn, String inspecName, String password, String deptId, String enabled, String devCodes, String role, String permissions, String hospitalId, Date pupdateTime, String changeAuditPassword, String clientId) {
         this.id = id;
         this.username = username;
         this.hisId = hisId;
@@ -51,7 +49,6 @@ public class LisInspecUser {
         this.pupdateTime = pupdateTime;
         this.changeAuditPassword = changeAuditPassword;
         this.clientId = clientId;
-        this.autoGraph = autoGraph;
     }
 
     public String getId() {
@@ -112,9 +109,5 @@ public class LisInspecUser {
 
     public String getClientId() {
         return clientId;
-    }
-
-    public String getAutoGraph() {
-        return autoGraph;
     }
 }

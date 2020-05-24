@@ -2,10 +2,13 @@ package com.yx.app.config;
 
 import com.yx.app.db.DynamicDataSource;
 import com.yx.app.db.DynamicDataSourceContextHolder;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +17,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -29,8 +32,30 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Configuration
-@MapperScan(basePackages = {"com.yx.app.dao"}, sqlSessionFactoryRef = "dynamicSqlSessionFactory")
+@MapperScan(basePackages = {"com.yx.app"}, sqlSessionFactoryRef = "dynamicSqlSessionFactory")//"sqlSessionFactory")
 public class DataSourceMybatisConfig {
+
+//    @Bean(name = "dataSource")
+//    @ConfigurationProperties("app.datasource")
+//    public HikariDataSource dataSource() {
+//        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+//    }
+//
+//    @Bean(name = "sqlSessionFactory")
+//    public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource)
+//            throws Exception {
+//        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+//        bean.setDataSource(dataSource);
+//        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//        bean.setMapperLocations(resolver.getResources("classpath:com/yx/app/dao/*.xml"));
+//        return bean.getObject();
+//    }
+//
+//    @Bean(name = "transactionManager")
+//    public DataSourceTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource) {
+//        return new DataSourceTransactionManager(dataSource);
+//    }
+
     /**
      * @return:  javax.sql.DataSource
      * @author: Administrator
@@ -38,9 +63,9 @@ public class DataSourceMybatisConfig {
      * @date: 2020/5/23 0023 17:57
      */
     @Bean(name = "dataSourceMaster")
-    @ConfigurationProperties(prefix = "spring.datasource.hikari.master")
-    public DataSource dataSourceMaster(){
-        return DataSourceBuilder.create().build();
+    @ConfigurationProperties(prefix = "spring.datasource.master")
+    public HikariDataSource dataSourceMaster(){
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
     /**
@@ -50,9 +75,9 @@ public class DataSourceMybatisConfig {
      * @date: 2020/5/23 0023 17:57
      */
     @Bean(name = "dataSourceSlave")
-    @ConfigurationProperties(prefix = "spring.datasource.hikari.slave")
-    public DataSource dataSourceSlave(){
-        return DataSourceBuilder.create().build();
+    @ConfigurationProperties(prefix = "spring.datasource.slave")
+    public HikariDataSource dataSourceSlave(){
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
     /**
@@ -87,17 +112,11 @@ public class DataSourceMybatisConfig {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dynamicDataSource);
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        bean.setMapperLocations(resolver.getResources("classpath:com/yx/app/entity/*.xml"));
+        bean.setMapperLocations(resolver.getResources("classpath:com/yx/app/dao/*.xml"));
         return bean.getObject();
     }
-
-    /**
-     * @return:  org.springframework.transaction.PlatformTransactionManager
-     * @author: Administrator
-     * @description: 配置Transactional注解
-     * @date: 2020/5/23 0023 18:07
-     */
-//    public PlatformTransactionManager transactionManager(){
-//        return new DataSourceTransactionManager(dynamicDataSource());
-//    }
+    @Bean(name = "dynamicTransactionManager")
+    public DataSourceTransactionManager dynamicTransactionManager(@Qualifier("dynamicDataSource") DataSource dynamicDataSource) {
+        return new DataSourceTransactionManager(dynamicDataSource);
+    }
 }

@@ -36,7 +36,7 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!-- 生成映射文件的包名和位置-->
-        <sqlMapGenerator targetPackage="com.yx.app.entity" targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="com.yx.app.dao" targetProject="src/main/java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
@@ -102,7 +102,7 @@
                     delimitedColumnName:true ,匹配column的值和数据库列的名称 大小写完全匹配，false 忽略大小写匹配
                     是否限定表的列名，即固定表列在Model中的名称
             -->
-            <!--<ignoreColumn column="PLAN_ID" delimitedColumnName="false"/>-->
+            <ignoreColumn column="AUTO_GRAPH" delimitedColumnName="false"/>
 
             <!--optional.覆盖MBG对Model 的生成规则
                  column: 数据库的列名
