@@ -1,7 +1,10 @@
 package com.yx.app.entity;
 
+import lombok.ToString;
+
 import java.util.Date;
 
+@ToString
 public class LisInspecUser {
     private String id;
 
@@ -110,4 +113,6 @@ public class LisInspecUser {
     public String getClientId() {
         return clientId;
     }
+
+
 }

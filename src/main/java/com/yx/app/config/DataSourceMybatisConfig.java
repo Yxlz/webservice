@@ -2,13 +2,11 @@ package com.yx.app.config;
 
 import com.yx.app.db.DynamicDataSource;
 import com.yx.app.db.DynamicDataSourceContextHolder;
-import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +15,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -34,27 +31,6 @@ import java.util.Map;
 @Configuration
 @MapperScan(basePackages = {"com.yx.app"}, sqlSessionFactoryRef = "dynamicSqlSessionFactory")//"sqlSessionFactory")
 public class DataSourceMybatisConfig {
-
-//    @Bean(name = "dataSource")
-//    @ConfigurationProperties("app.datasource")
-//    public HikariDataSource dataSource() {
-//        return DataSourceBuilder.create().type(HikariDataSource.class).build();
-//    }
-//
-//    @Bean(name = "sqlSessionFactory")
-//    public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource)
-//            throws Exception {
-//        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-//        bean.setDataSource(dataSource);
-//        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-//        bean.setMapperLocations(resolver.getResources("classpath:com/yx/app/dao/*.xml"));
-//        return bean.getObject();
-//    }
-//
-//    @Bean(name = "transactionManager")
-//    public DataSourceTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource) {
-//        return new DataSourceTransactionManager(dataSource);
-//    }
 
     /**
      * @return:  javax.sql.DataSource

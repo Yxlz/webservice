@@ -4,7 +4,6 @@ import com.yx.app.annotation.SwitchDataSource;
 import com.yx.app.dao.LisInspecUserMapper;
 import com.yx.app.entity.LisInspecUser;
 import com.yx.app.service.LisInspecUserService;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,7 @@ public class LisInspecUserServiceImpl implements LisInspecUserService {
     @Resource
     private LisInspecUserMapper lisInspecUserMapper;
 
-    @SwitchDataSource
+    //@SwitchDataSource
     @Override
     public List<LisInspecUser> getLisInspecUserList() {
         return lisInspecUserMapper.queryList();

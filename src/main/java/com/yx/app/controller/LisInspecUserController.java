@@ -27,4 +27,9 @@ public class LisInspecUserController {
     public List<LisInspecUser> getUsers(){
         return lisInspecUserService.getLisInspecUserList();
     }
+
+    @RequestMapping("getUser")
+    public LisInspecUser getUser(){
+        return lisInspecUserService.getLisInspecUserById("18");
+    }
 }
